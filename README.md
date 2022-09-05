@@ -71,3 +71,41 @@ HTTP/1.1 200 OK
     "mostExpensivePrice" : 최대가격
 }
 ```
+
+### 브랜드 상품 등록
+```
+Request
+POST apis/brands
+{
+    "title" : 브랜드명,
+    "price" : 가격,
+    "categoryId" : 카테고리 키
+}
+
+Response
+HTTP/1.1 201 CREATED
+-H Location apis/brands/{id}
+```
+
+### 브랜드 상품 수정
+```
+Request
+PUT apis/brands/{id}
+{
+    "title" : 브랜드명,
+    "price" : 가격
+}
+
+Response
+HTTP/1.1 204 NO_CONTENT
+```
+
+### 브랜드 상품 삭제
+```
+Request
+DELETE apis/brands/{id}
+
+
+Response
+HTTP/1.1 204 NO_CONTENT
+```
