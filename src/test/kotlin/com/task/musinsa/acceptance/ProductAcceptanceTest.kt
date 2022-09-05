@@ -19,9 +19,26 @@ class ProductAcceptanceTest : AcceptanceTest() {
             get("apis/products/lowest-price")
         } Then {
             statusCode(HttpStatus.OK.value())
+            contentType(ContentType.JSON)
             body("lowestPriceProductStyle.size()", equalTo(8))
             body("lowestPriceProductStyle[0].categoryName", equalTo("상의"))
             body("lowestPriceProductStyle[0].price", equalTo(10000))
+        } Extract {
+            println(body().asPrettyString())
+        }
+    }
+
+    @Test
+    fun `브랜드 묶음 최저가 상품 리스트 조회`() {
+        Given {
+            contentType(ContentType.JSON)
+        } When {
+            get("apis/products/brands/lowest-price")
+        } Then {
+            statusCode(HttpStatus.OK.value())
+            contentType(ContentType.JSON)
+            body("brandName", equalTo("D"))
+            body("totalPrice", equalTo(36100))
         } Extract {
             println(body().asPrettyString())
         }

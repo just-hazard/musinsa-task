@@ -28,3 +28,8 @@ data class LowestPriceProductStyleTotalPriceResponse(
     val lowestPriceProductStyle: List<LowestPriceProductStyleResponse>,
     val totalPrice: Int = lowestPriceProductStyle.sumOf { it.price }
 )
+
+data class LowestPriceBrandResponse(
+    val brandName: String,
+    val totalPrice: Int
+)

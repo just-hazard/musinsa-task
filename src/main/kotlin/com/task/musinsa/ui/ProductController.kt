@@ -1,6 +1,7 @@
 package com.task.musinsa.ui
 
 import com.task.musinsa.application.ProductPriceService
+import com.task.musinsa.dto.LowestPriceBrandResponse
 import com.task.musinsa.dto.LowestPriceProductStyleTotalPriceResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -18,5 +19,10 @@ class ProductController {
     @GetMapping("lowest-price")
     fun findLowestPriceProductStyle(): ResponseEntity<LowestPriceProductStyleTotalPriceResponse> {
         return ResponseEntity.ok().body(productPriceService.findLowestPriceProductStyle())
+    }
+
+    @GetMapping("brands/lowest-price")
+    fun findLowestPriceBrand(): ResponseEntity<LowestPriceBrandResponse> {
+        return ResponseEntity.ok().body(this.productPriceService.findLowestPriceBrand())
     }
 }
