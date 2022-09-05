@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -24,5 +25,12 @@ class ProductController {
     @GetMapping("brands/lowest-price")
     fun findLowestPriceBrand(): ResponseEntity<LowestPriceBrandResponse> {
         return ResponseEntity.ok().body(this.productPriceService.findLowestPriceBrand())
+    }
+
+    @GetMapping("categories/min-max-price")
+    fun findCategoryLowestAndMostExpensivePrice(
+        @RequestParam categoryName: String
+    ): ResponseEntity<Any> {
+        return ResponseEntity.ok().body(productPriceService.findLowestAndMostExpensivePriceCategory(categoryName))
     }
 }

@@ -1,13 +1,12 @@
 package com.task.musinsa.application
 
-import com.task.musinsa.dto.CategoryResponse
-import com.task.musinsa.dto.LowestPriceBrandResponse
-import com.task.musinsa.dto.LowestPriceProductStyleResponse
-import com.task.musinsa.dto.LowestPriceProductStyleTotalPriceResponse
+import com.task.musinsa.dto.*
+import com.task.musinsa.global.config.message.ErrorMessage
 import com.task.musinsa.repositories.CategoryRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import javax.persistence.EntityNotFoundException
 
 @Service
 @Transactional(readOnly = true)
@@ -62,11 +61,21 @@ class ProductPriceService {
             it.title
         }.entries.associate {
             it.key to
-            it.value.sumOf { brandResponse ->
-                brandResponse.price
-            }
+                    it.value.sumOf { brandResponse ->
+                        brandResponse.price
+                    }
         }.minByOrNull {
             it.value
         }!!
+    }
+
+    fun findLowestAndMostExpensivePriceCategory(categoryName: String): LowestAndMostExpensivePriceResponse {
+        val category = categoryRepository.findByTitle(categoryName).orElseThrow {
+            EntityNotFoundException(ErrorMessage.NON_EXISTENT_CATEGORY)
+        }
+
+        initProductCacheService.findAllProducts(category.id).apply {
+            return this.findLowestAndMostExpensivePrice()
+        }
     }
 }

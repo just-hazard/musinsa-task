@@ -5,11 +5,25 @@ data class CategoryResponse(
     val title: String,
     val brands: List<BrandResponse>
 ) {
-    fun findLowestPriceBrand() : BrandResponse {
-        return this.brands.minByOrNull {
-            it.price
-        }!!
+    fun findLowestPriceBrand(): BrandResponse {
+        return findLowestProduct()
     }
+
+    fun findLowestAndMostExpensivePrice(): LowestAndMostExpensivePriceResponse {
+        val min = findLowestProduct()
+        val max = brands.maxByOrNull { it.price }!!
+
+        return LowestAndMostExpensivePriceResponse(
+            min.title,
+            min.price,
+            max.title,
+            max.price
+        )
+    }
+
+    private fun findLowestProduct() = brands.minByOrNull {
+        it.price
+    }!!
 }
 
 data class BrandResponse(
@@ -32,4 +46,11 @@ data class LowestPriceProductStyleTotalPriceResponse(
 data class LowestPriceBrandResponse(
     val brandName: String,
     val totalPrice: Int
+)
+
+data class LowestAndMostExpensivePriceResponse(
+    val lowestPriceBrandName: String,
+    val lowestPrice: Int,
+    val mostExpensiveBrandName: String,
+    val mostExpensivePrice: Int
 )

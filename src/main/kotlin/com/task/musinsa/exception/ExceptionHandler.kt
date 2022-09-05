@@ -1,4 +1,4 @@
-package exception
+package com.task.musinsa.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
