@@ -25,11 +25,11 @@ class InitProductCacheService {
         }
 
         return CategoryResponse(
-            category.id,
+            category.id!!,
             category.title,
             category.brands.map {
                 BrandResponse(
-                    it.id,
+                    it.id!!,
                     it.title,
                     it.price.price
                 )

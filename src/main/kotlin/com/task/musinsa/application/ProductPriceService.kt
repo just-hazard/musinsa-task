@@ -40,7 +40,7 @@ class ProductPriceService {
 
     private fun findAllCategoryIds(): List<Long> {
         return categoryRepository.findAll().map {
-            it.id
+            it.id!!
         }.toList()
     }
 
@@ -74,7 +74,7 @@ class ProductPriceService {
             EntityNotFoundException(ErrorMessage.NON_EXISTENT_CATEGORY)
         }
 
-        initProductCacheService.findAllProducts(category.id).apply {
+        initProductCacheService.findAllProducts(category.id!!).apply {
             return this.findLowestAndMostExpensivePrice()
         }
     }

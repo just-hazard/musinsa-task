@@ -18,7 +18,7 @@ class ProductCache : CommandLineRunner {
     override fun run(vararg args: String?) {
         categoryRepository.findAll()
             .forEach {
-                initProductCacheService.findAllProducts(it.id)
+                initProductCacheService.findAllProducts(it.id!!)
             }
     }
 }

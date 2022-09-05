@@ -5,10 +5,6 @@ import javax.persistence.*
 
 @Entity
 class Brand(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-
     @Column(nullable = false)
     var title: String,
 
@@ -17,4 +13,13 @@ class Brand(
 
     @ManyToOne
     var category: Category
-) : BaseEntity()
+) : BaseEntity() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null
+
+    fun update(title: String, price: Int) {
+        this.title = title
+        this.price.update(price)
+    }
+}
